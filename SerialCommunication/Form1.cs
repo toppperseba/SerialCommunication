@@ -127,7 +127,7 @@ namespace SerialCommunication
                 }
 
                 string command = checkBoxDigital2.Checked ? "set d2 high" : "set d2 low";
-                serialPortArduino.WriteLine(command);
+               serialPortArduino.WriteLine(command);
                 labelStatus.Text = $"Status: Sent '{command}'";
             }
             catch (Exception ex)
@@ -176,6 +176,67 @@ namespace SerialCommunication
                 labelStatus.Text = "Error: " + ex.Message;
             }
 
+        }
+
+        private void trackBarPWM9_Scroll(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!serialPortArduino.IsOpen)
+                {
+                    labelStatus.Text = "Error: No open serial connection";
+                    return;
+                }
+
+                string command = $"set pwm9 {trackBarPWM9.Value}";
+                serialPortArduino.WriteLine(command);
+                labelStatus.Text = $"Status: Sent '{command}'";
+            }
+            catch (Exception ex)
+            {
+                labelStatus.Text = "Error: " + ex.Message;
+            }
+
+        }
+
+        private void trackBarPWM10_Scroll(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!serialPortArduino.IsOpen)
+                {
+                    labelStatus.Text = "Error: No open serial connection";
+                    return;
+                }
+
+                string command = $"set pwm10 {trackBarPWM10.Value}";
+                serialPortArduino.WriteLine(command);
+                labelStatus.Text = $"Status: Sent '{command}'";
+            }
+            catch (Exception ex)
+            {
+                labelStatus.Text = "Error: " + ex.Message;
+            }
+        }
+
+        private void trackBarPWM11_Scroll(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!serialPortArduino.IsOpen)
+                {
+                    labelStatus.Text = "Error: No open serial connection";
+                    return;
+                }
+
+                string command = $"set pwm11 {trackBarPWM11.Value}";
+                serialPortArduino.WriteLine(command);
+                labelStatus.Text = $"Status: Sent '{command}'";
+            }
+            catch (Exception ex)
+            {
+                labelStatus.Text = "Error: " + ex.Message;
+            }
         }
     }
 }

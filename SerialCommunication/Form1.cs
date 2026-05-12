@@ -242,6 +242,7 @@ namespace SerialCommunication
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             timerOefening3.Enabled = tabControl.SelectedIndex == 3;
+            timerOefening4.Enabled = tabControl.SelectedIndex == 4;
         }
 
         private void timerOefening3_Tick(object sender, EventArgs e)
@@ -250,7 +251,7 @@ namespace SerialCommunication
             {
                 if (serialPortArduino.IsOpen)
                 {
-                    serialPortArduino.ReadExisting(); 
+                    serialPortArduino.ReadExisting();
                     string comando = "get d5";
                     serialPortArduino.WriteLine(comando);
                     string antwoord = serialPortArduino.ReadLine();
@@ -263,8 +264,8 @@ namespace SerialCommunication
                     antwoord = serialPortArduino.ReadLine();
                     antwoord = antwoord.TrimEnd();
                     antwoord = antwoord.Substring(4);
-                    radioButtonDigital6.Checked = (antwoord == "1");  
-                    
+                    radioButtonDigital6.Checked = (antwoord == "1");
+
                     comando = "get d7";
                     serialPortArduino.WriteLine(comando);
                     antwoord = serialPortArduino.ReadLine();
@@ -274,15 +275,42 @@ namespace SerialCommunication
 
 
                 }
-               
+
             }
             catch (Exception exception)
             {
                 labelStatus.Text = "Error: " + exception.Message;
                 serialPortArduino.Close();
-                radioButtonVerbonden.Checked = false;   
+                radioButtonVerbonden.Checked = false;
                 buttonConnect.Text = "connect";
 
+            }
+        }
+
+        private void timerOefening4_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+               if (serialPortArduino.IsOpen)
+                {
+                    serialPortArduino.ReadExisting();
+                    string comando = "get a0";
+                    serialPortArduino.WriteLine(comando);
+                    string antwoord = serialPortArduino.ReadLine();
+                    antwoord = antwoord.TrimEnd();
+                    antwoord = antwoord.Substring(4);
+                    labelAnalog0.Text = antwoord;
+
+                    int value = int.Parse(antwoord);
+                    labelAnalog0.Text = value.ToString();
+                }
+            }
+            catch (Exception exception)
+            {
+                labelStatus.Text = "Error: " + exception.Message;
+                serialPortArduino.Close();
+                radioButtonVerbonden.Checked = false;
+                buttonConnect.Text = "connect";
             }
         }
     }
